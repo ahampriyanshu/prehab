@@ -1,84 +1,25 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-page: #fcfbf9;
-    --bg-surface: #f7f6f2;
-    --bg-card: #ffffff;
-    --ink-primary: #18181b;
-    --ink-secondary: #52525b;
-    --ink-muted: #71717a;
-    --ink-faint: #a1a1aa;
-    --border-light: #e4e4e7;
-    --border-subtle: #f0eee9;
-    --accent: #2e4057;
-    --accent-warm: #8c6d46;
-  }
-
-  html {
-    background-color: var(--bg-page);
-    color: var(--ink-primary);
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background-color: var(--bg-page);
-    color: var(--ink-primary);
-    min-height: 100vh;
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-    font-size: 1.125rem;
-    line-height: 1.85;
-    letter-spacing: -0.003em;
-  }
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #666666;
+  --text-faint: #999999;
 }
 
-/* Serif & Sans typography toggles */
-.font-book-serif {
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-}
-
-.font-book-sans {
+html,
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom quiet scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
-}
-
-/* Selection */
 ::selection {
-  background-color: #e4d8c5;
-  color: #18181b;
-}
-
-/* Print styling */
-@media print {
-  header,
-  aside,
-  nav,
-  button {
-    display: none !important;
-  }
-  main {
-    max-width: 100% !important;
-    padding: 0 !important;
-  }
+  background-color: #f0f0f0;
+  color: #000000;
 }
