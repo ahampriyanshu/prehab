@@ -16,14 +16,14 @@ export function Reader({ chapter, onNavigateChapter }: ReaderProps) {
     currentIndex < CHAPTERS.length - 1 ? CHAPTERS[currentIndex + 1] : null;
 
   return (
-    <article className="w-full max-w-2xl px-6 py-12 md:py-16">
+    <article className="w-full">
       {/* Title Header */}
       <header className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-normal text-black tracking-tight mb-2">
+        <h1 className="text-3xl sm:text-4xl font-normal text-black tracking-tight mb-2">
           {chapter.title}
         </h1>
         {chapter.subtitle && (
-          <p className="text-gray-500 text-base">
+          <p className="text-gray-500 text-base leading-relaxed">
             {chapter.subtitle}
           </p>
         )}

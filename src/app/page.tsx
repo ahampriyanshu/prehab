@@ -7,44 +7,25 @@ import { Reader } from '@/components/Reader';
 
 export default function Page() {
   const [currentChapterId, setCurrentChapterId] = useState<string>('prologue');
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   const currentChapter =
     CHAPTERS.find((c) => c.id === currentChapterId) || CHAPTERS[0];
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex">
-      {/* Sidebar on the Left */}
-      <Sidebar
-        currentChapterId={currentChapterId}
-        onSelectChapter={(id) => {
-          setCurrentChapterId(id);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        isOpenMobile={isMobileSidebarOpen}
-        onCloseMobile={() => setIsMobileSidebarOpen(false)}
-      />
+    <div className="min-h-screen bg-white text-gray-900">
+      {/* Centered Unified Reading Container */}
+      <div className="max-w-4xl mx-auto px-6 py-12 md:py-20 flex flex-col md:flex-row gap-12 md:gap-16 lg:gap-20 items-start">
+        {/* Sidebar Navigation */}
+        <Sidebar
+          currentChapterId={currentChapterId}
+          onSelectChapter={setCurrentChapterId}
+        />
 
-      {/* Main Content Area on the Right */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
-        {/* Mobile-only header button */}
-        <div className="lg:hidden p-4 border-b border-gray-100 flex items-center justify-between">
-          <button
-            onClick={() => setIsMobileSidebarOpen(true)}
-            className="text-sm font-medium text-black"
-          >
-            &equiv; Contents
-          </button>
-          <span className="text-sm text-gray-400">prehab</span>
-        </div>
-
-        <main className="flex-1 flex justify-center">
+        {/* Main Content */}
+        <main className="flex-1 min-w-0 max-w-xl">
           <Reader
             chapter={currentChapter}
-            onNavigateChapter={(id) => {
-              setCurrentChapterId(id);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onNavigateChapter={setCurrentChapterId}
           />
         </main>
       </div>
