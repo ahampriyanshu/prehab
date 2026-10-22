@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SUBTEN • The Ground-Up Human Kinetic Codex',
+  title: 'prehab • a field manual on the human kinetic chain',
   description:
-    'An interactive biomechanical atlas and diagnostic codex: mapping the human body from foot mechanics to exercises, kinetic posture, and somatic confidence.',
+    'A quiet, analog book documenting human movement from first principles: from barefoot mechanics to primal movement, breathing, and somatic confidence.',
 };
 
 export default function RootLayout({
@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+    <html lang="en">
+      <body className="min-h-screen bg-[#fcfbf9] text-zinc-900 antialiased">
         {children}
       </body>
     </html>

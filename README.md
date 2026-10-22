@@ -1,70 +1,56 @@
-# SubTen
+# prehab
 
-> **The Unbroken Human Kinetic Chain.**  
-> Mapping human physiology from earth contact to unshakeable somatic confidence.
+> **A Field Manual on the Human Kinetic Chain, Mechanical Restoration, and Embodied Confidence.**  
+> Plain text, quiet typography, soothing to the eyes.
 
-![Status](https://img.shields.io/badge/status-active-emerald)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-active-black)
+![License](https://img.shields.io/badge/license-MIT-stone)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 
 ---
 
-## The Thesis
+## The Philosophy
 
-Most fitness systems isolate muscles into disjointed days (*"Chest Monday, Leg Tuesday"*). They treat the human body like a loose collection of parts while ignoring the foundation.
+Modern fitness culture treats the human body as a loose collection of cosmetic parts: *"chest day," "arm day," "leg day."* People train muscles in complete isolation inside fixed machines while living in cushioned shoes and chairs that disconnect them from their biological foundation.
 
-**SubTen** models the human body as an integrated kinetic system from first principles:
+**prehab** is a quiet, first-principles handbook documenting the lessons learned across a multi-year physical transformation:
 
-```
-[01 Ground / Feet] ➔ [02 Torsion / Hips] ➔ [03 The Cylinder / Core] ➔ [04 Upper Carriage] ➔ [05 Mind & Presence]
-```
-
-### The Unbroken Chain
-1. **01 Ground Contact & Base**: The foot tripod (calcaneus, 1st MTP, 5th MTP), big toe extension, ankle dorsiflexion, and the plantar spring.
-2. **02 Torsion & Joint Stability**: Tibial spiral rotation, knee tracking (valgus prevention), and hip rotators / gluteal torque.
-3. **03 The Core & The Cylinder**: The pelvic bowl, 360° intra-abdominal pressure (IAP), diaphragmatic descent, and spinal hydraulic bracing.
-4. **04 The Upper Carriage**: Scapulothoracic gliding, latissimus dorsi tension, thoracic extension, and cervical retraction.
-5. **05 The Mind & Presence**: Somatosensory feedback, vagal tone regulation, and unshakeable physical grounding.
-
----
-
-## Features
-
-- **Interactive Bio-Kinetic Vector HUD**: Real-time vector schematic of human articulation nodes and force flow vectors.
-- **Collapse Cascade Simulator**: Visualizes how a collapsed arch or stiff ankle cascades into knee pain, anterior pelvic tilt, and forward head posture.
-- **Interactive Room Self-Audits**: Direct, practical physical tests you can perform right in your room (e.g. *Knee-to-Wall Ankle Test*, *Trendelenburg Screen*, *360° Hydraulic Breath Test*).
-- **Form Cue Simulator**: Direct comparisons between broken bro-science advice (*"Push through heels"*, *"Suck belly to spine"*) and biomechanically sound cues (*"Screw the tripod into the earth"*, *"Pressurize the 360° cylinder"*).
-- **Somatic Transmutation**: Connects biomechanical stability directly to nervous system regulation, low anxiety, and authentic personal presence.
+1. **Prologue — The Prehab Manifesto**: Fixing the roof before the rain. Why prehabilitation is superior to rehabilitation.
+2. **Article I — The Foot**: 26 bones, 33 joints, and the modern footwear problem. The foot tripod and restoring the plantar spring.
+3. **Article II — Ankles & Knees**: The joint-by-joint principle. Why the joint in pain is rarely the cause, and the 10cm wall test.
+4. **Article III — The Pelvis & Glute Amnesia**: The sitting disease, anterior pelvic tilt, and hip extension vs lumbar hyperextension.
+5. **Article IV — The Core & The Cylinder**: Intra-abdominal pressure (IAP) over sit-ups. Diaphragmatic breathing and vagus nerve calm.
+6. **Article V — The Upper Carriage**: The floating scapula, thoracic mobility, serratus anterior, and fixing the forward crane head.
+7. **Article VI — The Movement Codex**: The six primal movement patterns (Squat, Hinge, Push, Pull, Carry, Rotate) over bro-splits.
+8. **Article VII — Somatic Stature & Confidence**: The afferent feedback loop. How physical geometry directly anchors presence and self-worth.
+9. **Epilogue — The 10-Minute Daily Reset**: A minimalist, non-negotiable daily morning routine for lifelong durability.
 
 ---
 
-## Tech Stack
+## Design Ethos
 
-- **Framework**: [Next.js](https://nextjs.org/) (App Router, Static Export)
-- **UI & Animations**: React 19, [Tailwind CSS](https://tailwindcss.com/) v4, [Motion](https://motion.dev/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Deployment**: GitHub Pages via GitHub Actions
+- **Analog & Book-like**: Off-white paper background (`#fcfbf9`), deep charcoal ink (`#18181b`), generous line-height (`1.85`), and classic book typography.
+- **Distraction-Free**: No flashy animations, no AI gimmicks, no 3D shaders. Just clean, thoughtful, well-typeset essays.
+- **Reader Controls**: Instant toggle between classic editorial Serif and clean Sans, font-size adjustment (`A-`, `A`, `A+`), and print-friendly styles.
+- **Instant Search**: Quick fuzzy filter across all articles, drills, and axioms.
 
 ---
 
 ## Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/ahampriyanshu/subten.git
-cd subten
+# Clone
+git clone https://github.com/ahampriyanshu/subten.git prehab
+cd prehab
 
 # Install dependencies
 npm install
 
-# Run dev server
+# Run locally
 npm run dev
 
-# Type check
-npm run typecheck
-
-# Build static bundle
+# Static build
 npm run build
 ```
 
