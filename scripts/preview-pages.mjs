@@ -5,7 +5,7 @@ import {resolve, sep, extname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root = fileURLToPath(new URL('../out/', import.meta.url));
-const base = '/prehab/';
+const base = `${(process.env.PAGES_BASE_PATH || '').replace(/\/+$/, '')}/`;
 const port = Number(process.env.PORT || 4174);
 const types = {'.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.json':'application/json', '.txt':'text/plain; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.ico':'image/x-icon', '.woff2':'font/woff2'};
 try { await stat(join(root, 'index.html')); }
@@ -14,7 +14,7 @@ const server = createServer(async (req, res) => {
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, {Allow:'GET, HEAD'}); res.end(); return; }
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    if (pathname === '/' || pathname === '/prehab') { res.writeHead(302, {Location:base}); res.end(); return; }
+    if (base !== '/' && (pathname === '/' || pathname === base.slice(0, -1))) { res.writeHead(302, {Location:base}); res.end(); return; }
     if (!pathname.startsWith(base)) { res.writeHead(404); res.end('Not found'); return; }
     let file = resolve(root, pathname.slice(base.length));
     if (file !== resolve(root) && !file.startsWith(resolve(root) + sep)) { res.writeHead(404); res.end('Not found'); return; }

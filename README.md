@@ -38,7 +38,7 @@ White background, black text, grey accents and hover states. System typography, 
 
 ## GitHub Pages
 
-The site is built for `/prehab/` at [ahampriyanshu.com/prehab](https://ahampriyanshu.com/prehab/) (also available through `ahampriyanshu.github.io/prehab/`). GitHub Actions checks types, exports every lesson and deploys `out/` on pushes to `main`. Pull requests run the checks without publishing. The workflow uses GitHub’s automatic token; no deployment secrets are needed.
+The site is built for the root path at [prehab.ahampriyanshu.com](https://prehab.ahampriyanshu.com/). GitHub Actions checks types, exports every lesson and deploys `out/` on pushes to `main`. Pull requests run the checks without publishing. The workflow uses GitHub’s automatic token; no deployment secrets are needed.
 
 Use Node.js 22 (`nvm use`) and install with `npm ci`. To check the exact Pages build:
 
@@ -49,8 +49,8 @@ npm run check:pages
 npm run preview:pages
 ```
 
-The preview is at `http://127.0.0.1:4174/prehab/` (`PORT=4176 npm run preview:pages` selects another port). Development stays at the root URL with `npm run dev`. This is a static export, so `next start` is not used.
+The preview is at `http://127.0.0.1:4174/` (`PORT=4176 npm run preview:pages` selects another port). Development stays at the root URL with `npm run dev`. This is a static export, so `next start` is not used.
 
 In **Settings → Pages**, choose **GitHub Actions** as the publishing source. Push a commit to `main` to deploy, or run `npm run deploy` with an authenticated [GitHub CLI](https://cli.github.com/) to redeploy the latest remote `main`. The command does not upload uncommitted changes.
 
-`PAGES_BASE_PATH=/prehab` is set by `build:pages`; Next.js applies it to links and generated assets at build time. `scripts/check-pages.mjs` checks exported pages and local asset paths, and `scripts/preview-pages.mjs` serves the static output without additional packages. Generated builds, dependencies, secrets and local caches are ignored by Git.
+The custom-domain build uses an empty Next.js base path, so pages and assets resolve from `/`. `public/CNAME` records the custom domain in the deployment artifact. `PAGES_BASE_PATH` is an optional override for deployments under a subdirectory; it must also be provided to the checks and preview when used. `scripts/check-pages.mjs` checks exported pages and local asset paths, and `scripts/preview-pages.mjs` serves the static output without additional packages. Generated builds, dependencies, secrets and local caches are ignored by Git.

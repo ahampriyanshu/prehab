@@ -30,7 +30,7 @@ jobs:
         run: npm ci
       - name: Typecheck
         run: npm run typecheck
-      - name: Build for /prehab/
+      - name: Build for prehab.ahampriyanshu.com
         run: npm run build:pages
       - name: Verify deployment assets
         run: npm run check:pages
