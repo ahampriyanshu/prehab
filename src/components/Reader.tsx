@@ -1,88 +1,115 @@
-'use client';
+import Link from 'next/link';
+import { ENTRIES } from '@/data/journal';
+import type { JournalEntry, JournalSection } from '@/types/journal';
 
-import React from 'react';
-import { Chapter } from '@/types/book';
-import { CHAPTERS } from '@/data/book';
-
-interface ReaderProps {
-  chapter: Chapter;
-  onNavigateChapter: (chapterId: string) => void;
+function LessonList({ list }: { list: NonNullable<JournalSection['list']> }) {
+  const List = list.ordered ? 'ol' : 'ul';
+  return (
+    <List className="lesson-list">
+      {list.items.map((item, index) => (
+        <li key={index}>
+          {item.label && <strong>{item.label}: </strong>}
+          {item.text}
+        </li>
+      ))}
+    </List>
+  );
 }
 
-export function Reader({ chapter, onNavigateChapter }: ReaderProps) {
-  const currentIndex = CHAPTERS.findIndex((c) => c.id === chapter.id);
-  const prevChapter = currentIndex > 0 ? CHAPTERS[currentIndex - 1] : null;
-  const nextChapter =
-    currentIndex < CHAPTERS.length - 1 ? CHAPTERS[currentIndex + 1] : null;
+export function Reader({ entry }: { entry: JournalEntry }) {
+  const index = ENTRIES.findIndex((item) => item.slug === entry.slug);
+  const previous = ENTRIES[index - 1];
+  const next = ENTRIES[index + 1];
 
   return (
-    <article className="w-full">
-      {/* Title Header */}
-      <header className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-normal text-black tracking-tight mb-2">
-          {chapter.title}
-        </h1>
-        {chapter.subtitle && (
-          <p className="text-gray-500 text-base leading-relaxed">
-            {chapter.subtitle}
-          </p>
+    <main id="main-content" className="reader" tabIndex={-1}>
+      <article>
+        <header className="lesson-header">
+          <h1>{entry.title}</h1>
+          <p className="lesson-summary">{entry.summary}</p>
+        </header>
+        <div className="lesson-body">
+          {entry.sections.map((section, sectionIndex) => (
+            <section key={sectionIndex}>
+              {section.title && <h2>{section.title}</h2>}
+              {section.paragraphs.map((paragraph, paragraphIndex) => (
+                <p key={paragraphIndex}>{paragraph}</p>
+              ))}
+              {section.list && <LessonList list={section.list} />}
+              {section.table && (
+                <table className="lesson-table">
+                  <caption>{section.table.caption}</caption>
+                  <thead>
+                    <tr>
+                      {section.table.columns.map((column) => (
+                        <th key={column} scope="col">
+                          {column}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.table.rows.map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((cell, cellIndex) =>
+                          cellIndex === 0 ? (
+                            <th key={cellIndex} scope="row">
+                              {cell}
+                            </th>
+                          ) : (
+                            <td key={cellIndex}>{cell}</td>
+                          ),
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+              {section.note && (
+                <aside className="lesson-note">
+                  <h3>{section.note.title}</h3>
+                  <p>{section.note.text}</p>
+                </aside>
+              )}
+              {section.references && (
+                <ul
+                  className="lesson-references"
+                  aria-label="Sources for this section"
+                >
+                  {section.references.map((reference) => (
+                    <li key={reference.url}>
+                      <a href={reference.url}>{reference.title} ↗</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+          <aside className="lesson-takeaway">
+            <h2>The lesson</h2>
+            <p>{entry.takeaway}</p>
+          </aside>
+        </div>
+      </article>
+      <nav className="lesson-navigation" aria-label="Lesson navigation">
+        {previous && (
+          <Link href={`/journal/${previous.slug}/`} className="previous-lesson">
+            <span>← Previous lesson</span>
+            {previous.title}
+          </Link>
         )}
-      </header>
-
-      {/* Sections and Paragraphs */}
-      <div className="space-y-8 text-base text-gray-800 leading-relaxed">
-        {chapter.sections.map((section, sIdx) => (
-          <div key={sIdx} className="space-y-4">
-            {section.title && (
-              <h2 className="text-xl font-medium text-black pt-4">
-                {section.title}
-              </h2>
-            )}
-
-            {section.content.map((paragraph, pIdx) => (
-              <p key={pIdx}>{paragraph}</p>
-            ))}
-
-            {section.callout && (
-              <blockquote className="border-l-2 border-gray-300 pl-4 my-6 text-gray-700 italic">
-                <p className="not-italic text-xs text-gray-400 uppercase tracking-wider mb-1">
-                  {section.callout.title}
-                </p>
-                {section.callout.text}
-              </blockquote>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom Navigation */}
-      <nav className="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between text-sm">
-        {prevChapter ? (
-          <button
-            onClick={() => {
-              onNavigateChapter(prevChapter.id);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="text-gray-500 hover:text-black transition-colors"
-          >
-            &larr; {prevChapter.title.split(':')[0]}
-          </button>
+        {next ? (
+          <Link href={`/journal/${next.slug}/`} className="next-lesson">
+            <span>Next lesson →</span>
+            {next.title}
+          </Link>
         ) : (
-          <span />
-        )}
-
-        {nextChapter && (
-          <button
-            onClick={() => {
-              onNavigateChapter(nextChapter.id);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="text-gray-500 hover:text-black transition-colors ml-auto"
-          >
-            {nextChapter.title.split(':')[0]} &rarr;
-          </button>
+          <Link href="/" className="next-lesson">
+            <span>Back to the beginning →</span>
+            {ENTRIES[0].title}
+          </Link>
         )}
       </nav>
-    </article>
+    </main>
   );
 }

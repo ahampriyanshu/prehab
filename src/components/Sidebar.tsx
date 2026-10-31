@@ -1,69 +1,87 @@
 'use client';
 
-import React from 'react';
-import { CHAPTERS } from '@/data/book';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useRef } from 'react';
+import type { JournalEntry } from '@/types/journal';
 
-interface SidebarProps {
-  currentChapterId: string;
-  onSelectChapter: (id: string) => void;
-  isOpenMobile?: boolean;
-  onCloseMobile?: () => void;
-}
+type IndexEntry = Pick<JournalEntry, 'slug' | 'number' | 'title'>;
 
 export function Sidebar({
-  currentChapterId,
-  onSelectChapter,
-}: SidebarProps) {
-  return (
-    <aside className="w-full md:w-52 lg:w-56 shrink-0 md:sticky md:top-16 self-start">
-      <div className="mb-8">
-        <button
-          onClick={() => {
-            onSelectChapter('prologue');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="text-left text-xl font-medium text-black tracking-tight hover:opacity-80 transition-opacity"
-        >
-          prehab
-        </button>
-        <p className="text-xs text-gray-400 mt-0.5">
-          field manual
-        </p>
-      </div>
+  entries,
+  author,
+}: {
+  entries: IndexEntry[];
+  author: string;
+}) {
+  const pathname = usePathname().replace(/\/$/, '') || '/';
+  const mobileContents = useRef<HTMLDetailsElement>(null);
+  const activeEntry =
+    entries.find((entry) => pathname === `/journal/${entry.slug}`) ??
+    (pathname === '/' || pathname === '/journal' ? entries[0] : undefined);
 
-      <nav className="space-y-1">
-        {CHAPTERS.map((ch) => {
-          const isActive = ch.id === currentChapterId;
+  const closeContents = () => {
+    if (mobileContents.current) mobileContents.current.open = false;
+  };
 
-          return (
-            <button
-              key={ch.id}
-              onClick={() => {
-                onSelectChapter(ch.id);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`block w-full text-left py-1 text-sm transition-colors ${
-                isActive
-                  ? 'text-black font-medium'
-                  : 'text-gray-400 hover:text-gray-800'
-              }`}
+  const links = (
+    <>
+      <ol className="lesson-index">
+        {entries.map((entry) => (
+          <li key={entry.slug}>
+            <Link
+              href={`/journal/${entry.slug}/`}
+              aria-current={
+                activeEntry?.slug === entry.slug ? 'page' : undefined
+              }
+              onClick={closeContents}
             >
-              {ch.number !== '00' && ch.number !== '08' && (
-                <span className="text-gray-300 mr-2 text-xs font-mono">
-                  {ch.number}
-                </span>
-              )}
-              <span>
-                {ch.id === 'prologue'
-                  ? 'Prologue'
-                  : ch.id === 'epilogue'
-                  ? 'Epilogue'
-                  : ch.title.split(':')[0]}
-              </span>
-            </button>
-          );
-        })}
+              <span className="lesson-number">{entry.number}</span>
+              <span>{entry.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ol>
+      <Link
+        href="/about/"
+        className="about-link"
+        aria-current={pathname === '/about' ? 'page' : undefined}
+        onClick={closeContents}
+      >
+        About this journal
+      </Link>
+    </>
+  );
+
+  return (
+    <aside className="sidebar">
+      <Link
+        href="/"
+        className="wordmark"
+        aria-label="Prehab home"
+        onClick={closeContents}
+      >
+        prehab
+      </Link>
+      <p className="journal-description">
+        Notes on getting fit in my twenties.
+      </p>
+      <nav className="desktop-contents" aria-label="Lesson index">
+        <p className="index-label">Contents</p>
+        {links}
       </nav>
+      <details ref={mobileContents} className="mobile-contents">
+        <summary>
+          Contents{' '}
+          <span>
+            {activeEntry
+              ? `${activeEntry.number} / ${String(entries.length).padStart(2, '0')}`
+              : 'All lessons'}
+          </span>
+        </summary>
+        <nav aria-label="Lesson index">{links}</nav>
+      </details>
+      <p className="sidebar-author">{author}</p>
     </aside>
   );
 }
